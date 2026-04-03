@@ -1,0 +1,93 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dagster-nebula"
+version = "0.1.0"
+description = "Nebula Data Pipeline - A Dagster-based orchestration system for data ingestion, processing, and storage on Databricks"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "Nebula Team", email = "team@nebula.dev"}
+]
+license = {text = "MIT"}
+keywords = ["dagster", "data-pipeline", "databricks", "orchestration"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "dagster>=1.5.0",
+    "dagster-webserver>=1.5.0",
+    "pandas>=1.5.0",
+    "pyspark>=3.3.0",
+    "databricks-sql-connector>=0.3.0",
+    "boto3>=1.26.0",
+    "python-dotenv>=0.21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+]
+
+databricks = [
+    "databricks-connect>=13.0.0",
+    "databricks-labs-blueprint>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/nebula-data-pipeline"
+Repository = "https://github.com/yourusername/nebula-data-pipeline.git"
+Documentation = "https://github.com/yourusername/nebula-data-pipeline/wiki"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dagster_nebula*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_mode = 3
+include_trailing_comma = true
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--cov=dagster_nebula --cov-report=html --cov-report=term-missing"
+
